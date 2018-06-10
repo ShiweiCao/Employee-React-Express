@@ -4,9 +4,12 @@ const Schema = mongoose.Schema;
 const EmpSchema = new Schema({
     name : String,
     phone : String,
-    email : Number,
-    manager : String,
+    email : String,
+    manager : {
+        type: Schema.Types.ObjectId,
+        ref : 'manager'
+    },
     subordinate: [],
 });
 
-module.exports = mongoose.model('Emp', EmpSchema);
+module.exports = mongoose.model('Employee', EmpSchema);

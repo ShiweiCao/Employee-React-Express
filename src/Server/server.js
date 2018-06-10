@@ -2,19 +2,14 @@ const express    = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const app = new express();   
-
-// const pilotRouter = require('./Router/pilotRouter')
-// const mechRouter = require('./Router/mechRouter')
-// const unitRouter = require('./Router/unitRouter')
+const app = new express();  
+const router = require('./Router/employees')
 
 const mongoose   = require('mongoose');
 mongoose.connect('mongodb://admin:admin@ds014658.mlab.com:14658/mydb');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-const Unit = require('./Model/unit.js')
 
 
 app.use((req, res, next) => {
@@ -32,10 +27,10 @@ app.use(function(req, res, next) {
     next();
 });
 
-// app.use('/pilots', pilotRouter)
-// app.use('/meches', mechRouter)
-// app.use('/units', unitRouter)
+app.use('/employees', router);
 
 app.listen(8888, () => {
     console.log('Listening on port 8888')
 });
+
+
