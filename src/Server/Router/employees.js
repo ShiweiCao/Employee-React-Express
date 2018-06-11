@@ -40,22 +40,23 @@ router.post('/', (req, res) => {
     });
 });
 
-router.put('/:mech_id', (req,res) => {
-    Mech.findById(req.params.mech_id, (err, mech) => {
+router.put('/:emp_id', (req,res) => {
+    Mech.findById(req.params.emp_id, (err, emp) => {
         
         if(err) {
             res.status(500).send(err);
         } else {
-            mech.id = req.body.id;
-            mech.name = req.body.name;
-            mech.model = req.body.model;
-            mech.weight = req.body.weight;
-            mech.class = req.body.class;
-            mech.save(err => {
+            emp._id = req.body._id;
+            emp.name = req.body.name;
+            emp.phone = req.body.phone;
+            emp.email = req.body.email;
+            emp.manager = req.body.manager;
+            emp.subordinate = req.body.subordinate;
+            emp.save(err => {
                 if(err) {
                     res.status(500).send('Failed to save!');
                 }
-                res.status(200).json({'Mech updated!' : mech})
+                res.status(200).json({'Employee updated!' : emp})
             })
         }
     })
