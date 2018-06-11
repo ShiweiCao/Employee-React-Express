@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,7 +7,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import * as actions from '../../actions/actionCreator.js'
+import Tablerow from './Tablerow'
+
 class EmployeeList extends Component {
+    componentDidMount = () => {
+        this.props.dispatch(actions.getAllEmps());
+    }   
+
     render() {
         return (
             <div className="container" style={{width: "1500px"}}>
@@ -31,6 +39,13 @@ class EmployeeList extends Component {
                                 <TableCell> Delete </TableCell>
                             </TableRow>
                         </TableHead>
+                        <TableBody>
+                            {
+                                this.props.employees.map((element, index) => (
+                                    <Tablerow emp={element} key={index}/>
+                                ))
+                            }
+                        </TableBody>
                     </Table>
 
                 </div>
@@ -41,4 +56,11 @@ class EmployeeList extends Component {
     }
 }
 
-export default EmployeeList;
+
+const mapStateToProps = (state) => {
+    return {
+        employees : state.employeeR.employees,
+    }
+}
+
+export default connect(mapStateToProps)(EmployeeList);

@@ -12,13 +12,16 @@ export default class Tablerow extends Component {
     }
 
     render() {
+        let telstr = "tel:" + this.props.phone;
+        let emailstr = "Mailto:" + this.props.email;
+
         return (
             <TableRow>
                 <TableCell> {this.props.emp.avatar} </TableCell>
                 <TableCell> {this.props.emp.name} </TableCell>
-                <TableCell> <a href="`tel:${this.props.emp.phone}`">{this.props.emp.phone}</a> </TableCell>
-                <TableCell> {this.props.emp.email} </TableCell>
-                <TableCell> {this.props.emp.manager} </TableCell>
+                <TableCell> <a href={telstr}>{this.props.emp.phone}</a> </TableCell>
+                <TableCell> <a href={emailstr}>{this.props.emp.email}</a> </TableCell>
+                <TableCell> {this.props.emp.manager_id} </TableCell>
                 <TableCell> {this.props.emp.subordinate.length} </TableCell>
             </TableRow>
         )
