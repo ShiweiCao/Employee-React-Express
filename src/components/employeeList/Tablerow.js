@@ -16,7 +16,7 @@ export default class Tablerow extends Component {
             <TableRow>
                 <TableCell> {this.props.emp.avatar} </TableCell>
                 <TableCell> {this.props.emp.name} </TableCell>
-                <TableCell> {this.props.emp.phone} </TableCell>
+                <TableCell> <a href="`tel:${this.props.emp.phone}`">{this.props.emp.phone}</a> </TableCell>
                 <TableCell> {this.props.emp.email} </TableCell>
                 <TableCell> {this.props.emp.manager} </TableCell>
                 <TableCell> {this.props.emp.subordinate.length} </TableCell>
