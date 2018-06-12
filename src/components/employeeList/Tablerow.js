@@ -20,7 +20,14 @@ export default class Tablerow extends Component {
                 <TableCell> <Link to={url}> {this.props.emp.name} </Link> </TableCell>
                 <TableCell> <a href={telstr}>{this.props.emp.phone}</a> </TableCell>
                 <TableCell> <a href={emailstr}>{this.props.emp.email}</a> </TableCell>
-                <TableCell> {this.props.emp.manager_id} </TableCell>
+                {
+                    this.props.emp.manager_id !== "" && <TableCell onClick={ () => this.props.showManager(this.props.emp.manager_id) }> {this.props.emp.managername} </TableCell>
+                }
+
+                {
+                    this.props.emp.manager_id === "" && <TableCell> No Manager </TableCell>
+                }
+                
                 {
                     this.props.emp.subordinate.length > 0 &&
 

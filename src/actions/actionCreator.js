@@ -19,7 +19,6 @@ export const getAllEmps = () => {
                             .catch(err => console.log(err))
                     }
                 })
-                console.log(newEmps);
             })
             .catch(err => console.log(err));
     })

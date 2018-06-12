@@ -16,6 +16,7 @@ class EmployeeList extends Component {
         super(props);
         this.state = {
             searchid : [],
+            managerid: ""
         }
     }
 
@@ -25,13 +26,22 @@ class EmployeeList extends Component {
 
     showSubordinate = (subordinates) => {
         this.setState({
-            searchid : subordinates
+            searchid : subordinates,
+            managerid: "",
+        })
+    }
+
+    showManager = (manager_id) => {
+        this.setState({
+            managerid: manager_id,
+            searchid : [],
         })
     }
 
     reset = () => {
         this.setState({
             searchid: [],
+            managerid: ""
         })
     }
 
@@ -57,21 +67,27 @@ class EmployeeList extends Component {
                                 <TableCell> Email </TableCell>
                                 <TableCell> Manager </TableCell>
                                 <TableCell> Numbers of Subordinates </TableCell>
-                                <TableCell> Delete </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {
-                                this.state.searchid.length === 0 &&                                
+                                this.state.searchid.length === 0 && this.state.managerid === "" &&                           
                                 this.props.employees.map((element, index) => (
-                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate}/>
+                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate} showManager={this.showManager}/>
                                 ))
                             }
 
                             {
                                 this.state.searchid.length > 0 &&
-                                this.props.employees.filter( each => this.state.searchid.includes(each._id)).map((element, index) => (
-                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate}/>
+                                this.props.employees.filter( each => this.state.searchid.includes(each._id) ).map((element, index) => (
+                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate} showManager={this.showManager} />
+                                ))
+                            }
+
+                            {
+                                this.state.managerid !== "" && 
+                                this.props.employees.filter( each => this.state.managerid === each._id).map((element, index) => (
+                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate} showManager={this.showManager} />
                                 ))
                             }
                         </TableBody>
