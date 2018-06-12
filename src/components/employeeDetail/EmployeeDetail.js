@@ -12,24 +12,23 @@ import * as actions from '../../actions/actionCreator'
 class employeeDetail extends Component {
     constructor(props){
         super(props);
+        this.state = {
+        }
     }
 
     componentDidMount = () => {
         let url = window.location.pathname;
         this.props.dispatch(actions.getAllEmps());
         if(url !== "/employee"){
-            console.log(url.slice(10));
-            this.props.dispatch(actions.getOne(url.slice(10)));
-        }        
+            this.props.dispatch(actions.getOne(url.split("/")[2]));
+        } 
     }
 
     handleChange = (e, tar) => {
         this.props.dispatch(actions.onChangeEmp(e.target.value, tar))
     }
 
-    render() {
-        
-        
+    render() {        
         return (
             <div className="container" style={{width: "600px", margin: "auto"}}>
                 <h1 style={{width: "600px", textAlign: "center"}}> Employee Detail </h1>
@@ -43,7 +42,7 @@ class employeeDetail extends Component {
                     E-mail:<br/><Input onChange={ (e) => this.handleChange(e, "email") }value={this.props.employee.email}/><br/><br/>
                     <TextField select label="Manager" style={{width: "200px"}}>
                         {
-                            this.props.employees.map((element, index) => (
+                            this.props.employees.filter(emp => !this.props.employee.allSub.includes(emp._id)).map((element, index) => (
                                 <option key={index} value={element.name}> {element.name} </option>
                             ))
                         }

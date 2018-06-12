@@ -7,6 +7,19 @@ export const getAllEmps = () => {
             .then(res => {
                 let emps = res.data;
                 dispatch(updateEmps(emps));
+
+                let newEmps = [...emps];
+                emps.map((emp, index) => {
+                    if(emp.manager_id !== ""){
+                        axios.get("http://localhost:8888/employees/" + emp.manager_id)
+                            .then(res => {
+                                newEmps[index] = { ...newEmps[index], managername : res.data.name };
+                                dispatch(updateEmps(newEmps));
+                            })
+                            .catch(err => console.log(err))
+                    }
+                })
+                console.log(newEmps);
             })
             .catch(err => console.log(err));
     })
@@ -33,7 +46,7 @@ const updateEmps = (emps) => {
     })
 }
 
-const updateEmp = (emp) => {
+const updateEmp = (emp) => {    
     return ({
         type: "GETONE",
         data: emp,
