@@ -39,3 +39,11 @@ const updateEmp = (emp) => {
         data: emp,
     })
 }
+
+export const onChangeEmp = (value, target) => {
+    return ({
+        type: "CHANGE",
+        value: value,
+        target: target,
+    })
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -42,7 +43,7 @@ class EmployeeList extends Component {
                 </div>
 
                 <div style={{width: "50%", float: "right", margin: "25px auto"}}>
-                    <Button variant="raised" > Add New </Button>
+                    <Link to='/employee'><Button variant="raised" color="primary"> Add New </Button></Link>
                     <Button variant="raised" color="secondary" onClick={this.reset} style={{margin: "10px"}}> Reset </Button>
                 </div>
 

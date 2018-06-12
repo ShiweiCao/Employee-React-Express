@@ -16,14 +16,20 @@ class employeeDetail extends Component {
 
     componentDidMount = () => {
         let url = window.location.pathname;
+        this.props.dispatch(actions.getAllEmps());
         if(url !== "/employee"){
             console.log(url.slice(10));
             this.props.dispatch(actions.getOne(url.slice(10)));
-        } 
-        
+        }        
+    }
+
+    handleChange = (e, tar) => {
+        this.props.dispatch(actions.onChangeEmp(e.target.value, tar))
     }
 
     render() {
+        
+        
         return (
             <div className="container" style={{width: "600px", margin: "auto"}}>
                 <h1 style={{width: "600px", textAlign: "center"}}> Employee Detail </h1>
@@ -32,9 +38,9 @@ class employeeDetail extends Component {
                 </div>
 
                 <div style={{width: "200px", margin: "50px auto"}}>
-                    Name:<br/><Input value={this.props.employee.name}/><br/><br/>
-                    Phone:<br/><Input value={this.props.employee.phone}/><br/><br/>
-                    E-mail:<br/><Input value={this.props.employee.email}/><br/><br/>
+                    Name:<br/><Input onChange={ (e) => this.handleChange(e, "name") } value={this.props.employee.name}/><br/><br/>
+                    Phone:<br/><Input onChange={ (e) => this.handleChange(e, "phone") }value={this.props.employee.phone}/><br/><br/>
+                    E-mail:<br/><Input onChange={ (e) => this.handleChange(e, "email") }value={this.props.employee.email}/><br/><br/>
                     <TextField select label="Manager" style={{width: "200px"}}>
                         {
                             this.props.employees.map((element, index) => (
