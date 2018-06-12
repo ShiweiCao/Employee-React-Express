@@ -5,6 +5,17 @@ export const getAllEmps = () => {
     return(dispatch => {
         axios.get("http://localhost:8888/employees/")
             .then(res => {
+                let emps = res.data;
+                dispatch(updateEmps(emps));
+            })
+            .catch(err => console.log(err));
+    })
+}
+
+export const getOne = (id) => {
+    return(dispatch => {
+        axios.get("http://localhost:8888/employees/" + id)
+            .then(res => {
                 let emp = res.data;
                 dispatch(updateEmp(emp));
             })
@@ -15,9 +26,16 @@ export const getAllEmps = () => {
 
 //----------------------------------------
 
+const updateEmps = (emps) => {
+    return ({
+        type: "GETALL",
+        data: emps,
+    })
+}
+
 const updateEmp = (emp) => {
     return ({
-        type: "GET",
+        type: "GETONE",
         data: emp,
     })
 }

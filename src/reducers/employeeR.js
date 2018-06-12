@@ -1,11 +1,14 @@
 let initialState = {
     employees: [],
+    employee: {}
 }
 
 const employeeR = (state = initialState, action) => {
     switch (action.type) {
-        case "GET":
+        case "GETALL":
             return {...state, employees: [...action.data]};
+        case "GETONE":
+            return {...state, employee: {...action.data}};
         default:
             return state;       
     }

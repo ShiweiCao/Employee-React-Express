@@ -11,9 +11,28 @@ import * as actions from '../../actions/actionCreator.js'
 import Tablerow from './Tablerow'
 
 class EmployeeList extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            searchid : [],
+        }
+    }
+
     componentDidMount = () => {
         this.props.dispatch(actions.getAllEmps());
     }   
+
+    showSubordinate = (subordinates) => {
+        this.setState({
+            searchid : subordinates
+        })
+    }
+
+    reset = () => {
+        this.setState({
+            searchid: [],
+        })
+    }
 
     render() {
         return (
@@ -24,6 +43,7 @@ class EmployeeList extends Component {
 
                 <div style={{width: "50%", float: "right", margin: "25px auto"}}>
                     <Button variant="raised" > Add New </Button>
+                    <Button variant="raised" color="secondary" onClick={this.reset} style={{margin: "10px"}}> Reset </Button>
                 </div>
 
                 <div className="empTable">
@@ -41,8 +61,16 @@ class EmployeeList extends Component {
                         </TableHead>
                         <TableBody>
                             {
+                                this.state.searchid.length === 0 &&                                
                                 this.props.employees.map((element, index) => (
-                                    <Tablerow emp={element} key={index}/>
+                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate}/>
+                                ))
+                            }
+
+                            {
+                                this.state.searchid.length > 0 &&
+                                this.props.employees.filter( each => this.state.searchid.includes(each._id)).map((element, index) => (
+                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate}/>
                                 ))
                             }
                         </TableBody>
