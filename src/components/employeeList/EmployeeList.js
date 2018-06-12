@@ -45,6 +45,10 @@ class EmployeeList extends Component {
         })
     }
 
+    clearEmp = () => {
+        this.props.dispatch(actions.clearEmp())
+    }
+
     render() {
         return (
             <div className="container" style={{width: "1500px"}}>
@@ -53,7 +57,7 @@ class EmployeeList extends Component {
                 </div>
 
                 <div style={{width: "50%", float: "right", margin: "25px auto"}}>
-                    <Link to='/employee'><Button variant="raised" color="primary"> Add New </Button></Link>
+                    <Link to='/employee'><Button variant="raised" color="primary" onClick={this.clearEmp}> Add New </Button></Link>
                     <Button variant="raised" color="secondary" onClick={this.reset} style={{margin: "10px"}}> Reset </Button>
                 </div>
 

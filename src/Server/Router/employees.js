@@ -24,12 +24,12 @@ router.get('/:emp_id', (req, res) =>{
 })
 
 router.post('/', (req, res) => {
-    var emp = new Emp();
+    var emp = new Employee();
     emp._id = req.body._id;
     emp.name = req.body.name;
     emp.phone = req.body.phone;
     emp.email = req.body.email;
-    emp.manager = req.body.manager;
+    emp.manager_id = req.body.manager_id;
     emp.subordinate = req.body.subordinate;
 
     emp.save( err => {
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:emp_id', (req,res) => {
-    Mech.findById(req.params.emp_id, (err, emp) => {
+    Employee.findById(req.params.emp_id, (err, emp) => {
         
         if(err) {
             res.status(500).send(err);
@@ -50,7 +50,7 @@ router.put('/:emp_id', (req,res) => {
             emp.name = req.body.name;
             emp.phone = req.body.phone;
             emp.email = req.body.email;
-            emp.manager = req.body.manager;
+            emp.manager_id = req.body.manager_id;
             emp.subordinate = req.body.subordinate;
             emp.save(err => {
                 if(err) {

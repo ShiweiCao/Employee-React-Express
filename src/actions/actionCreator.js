@@ -35,6 +35,16 @@ export const getOne = (id) => {
     })
 }
 
+export const saveEmp = (emp) => {
+    console.log(typeof(emp.manager_id));
+    return(dispatch => {
+        axios.put("http://localhost:8888/employees/" + emp._id, emp)
+            .then(res => {
+            })
+            .catch(err => console.log(err));
+    })
+}
+
 
 //----------------------------------------
 
@@ -57,5 +67,11 @@ export const onChangeEmp = (value, target) => {
         type: "CHANGE",
         value: value,
         target: target,
+    })
+}
+
+export const clearEmp = () => {
+    return ({
+        type: "CLEAREMP",
     })
 }

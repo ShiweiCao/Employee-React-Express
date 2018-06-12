@@ -28,6 +28,10 @@ class employeeDetail extends Component {
         this.props.dispatch(actions.onChangeEmp(e.target.value, tar))
     }
 
+    save = () => {
+        this.props.dispatch(actions.saveEmp(this.props.employee))
+    }
+
     render() {        
         return (
             <div className="container" style={{width: "600px", margin: "auto"}}>
@@ -40,15 +44,15 @@ class employeeDetail extends Component {
                     Name:<br/><Input onChange={ (e) => this.handleChange(e, "name") } value={this.props.employee.name}/><br/><br/>
                     Phone:<br/><Input onChange={ (e) => this.handleChange(e, "phone") }value={this.props.employee.phone}/><br/><br/>
                     E-mail:<br/><Input onChange={ (e) => this.handleChange(e, "email") }value={this.props.employee.email}/><br/><br/>
-                    <TextField select label="Manager" style={{width: "200px"}}>
+                    <TextField select label="Manager" value={this.props.employee.manager_id} onChange={ (e) => this.handleChange(e, "manager_id")} style={{width: "200px"}}>
                         {
                             this.props.employees.filter(emp => !this.props.employee.allSub.includes(emp._id)).map((element, index) => (
-                                <option key={index} value={element.name}> {element.name} </option>
+                                <option key={index} value={element._id}> {element.name} </option>
                             ))
                         }
                     </TextField>  
                     <br/><br/>
-                    <Button variant="raised" color="primary"> Save </Button>
+                    <Button onClick={this.save} variant="raised" color="primary"> Save </Button>
                     <Link to='/'><Button variant="raised" color="secondary" style={{margin: "10px"}}> Cancel </Button></Link>
                                   
                 </div>
