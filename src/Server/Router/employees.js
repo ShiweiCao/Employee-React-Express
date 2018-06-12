@@ -25,12 +25,11 @@ router.get('/:emp_id', (req, res) =>{
 
 router.post('/', (req, res) => {
     var emp = new Employee();
-    emp._id = req.body._id;
     emp.name = req.body.name;
     emp.phone = req.body.phone;
     emp.email = req.body.email;
     emp.manager_id = req.body.manager_id;
-    emp.subordinate = req.body.subordinate;
+    emp.subordinate = [];
 
     emp.save( err => {
         if(err) {
@@ -62,14 +61,14 @@ router.put('/:emp_id', (req,res) => {
     })
 })
 
-router.delete('/:mech_id', (req,res) => {
-    Mech.remove({
-        _id : req.params.mech_id
-    }, (err, mech) => {
+router.delete('/:emp_id', (req,res) => {
+    Employee.remove({
+        _id : req.params.emp_id
+    }, (err, emp) => {
         if(err) {
             res.status(200).send(err);
         }
-        res.status(500).json({'Mech deleted!': req.params.mech_id});
+        res.status(500).json({'Employee deleted!': req.params.emp_id});
     })
 })
 

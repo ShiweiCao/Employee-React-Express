@@ -36,13 +36,23 @@ export const getOne = (id) => {
 }
 
 export const saveEmp = (emp) => {
-    console.log(typeof(emp.manager_id));
-    return(dispatch => {
+    if(emp._id !== undefined){
+        return(dispatch => {
         axios.put("http://localhost:8888/employees/" + emp._id, emp)
             .then(res => {
+                window.location = '/';
             })
-            .catch(err => console.log(err));
-    })
+            .catch(err => console.log(emp));
+        })
+    } else {
+        axios.post("http://localhost:8888/employees/", emp)
+            .then(res => {
+                window.location = '/';
+            })
+
+            .catch(err => console.log(emp));
+    }
+    
 }
 
 

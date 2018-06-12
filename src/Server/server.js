@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 
 app.use((req, res, next) => {
-    console.log("A " + req.method + " request received at " + new Date());
+    console.log(req.method + " " + req.originalUrl);
     next();
 });
 
