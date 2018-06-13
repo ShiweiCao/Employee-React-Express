@@ -9,12 +9,11 @@ const employeeR = (state = initialState, action) => {
             return {...state, employees: [...action.data]};
 
         case "GETONE":{
-            let res = [];
-            res.push(action.data._id);
-
+            
             if(action.data.subordinate.length !== 0){
                 let stack = [...action.data.subordinate];
-
+                let res = [];
+                res.push(action.data._id);
 
                 while(stack.length !== 0) {
                     let cur_id = stack.pop();
@@ -27,7 +26,7 @@ const employeeR = (state = initialState, action) => {
                 }
                 return {...state, employee: {...action.data, allSub: [...res]}};
             } else {
-                return {...state, employee: {...action.data, allSub: []}};
+                return {...state, employee: {...action.data, allSub: [action.data._id]}};
             }
         }            
             
@@ -36,6 +35,20 @@ const employeeR = (state = initialState, action) => {
             obj[action.target] = action.value;
             return {...state, employee: obj}
         }
+
+        case "SORT": {
+            let emps = [...state.employees];
+            if(action.order === "asc"){
+                emps.sort((a,b) => (
+                    a[action.target][0]-b[action.target][0]
+                ))
+            } else {
+                emps.sort((a,b) => b[action.target][0]-a[action.target][0])
+            }            
+            console.log(emps);
+            return {...state, employees: emps}
+        }
+
         case "CLEAREMP": 
             return {...state, employee: {_id:"", name:"", phone:"", email:"", manager_id:"", subordinate:[], allSub:[]}}
         default:

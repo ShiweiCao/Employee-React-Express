@@ -7,16 +7,20 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel  from '@material-ui/core/TableSortLabel';
 
 import * as actions from '../../actions/actionCreator.js'
 import Tablerow from './Tablerow'
+
 
 class EmployeeList extends Component {
     constructor(props){
         super(props);
         this.state = {
             searchid : [],
-            managerid: ""
+            managerid: "",
+            sort_id: "",
+            order : "asc",
         }
     }
 
@@ -41,12 +45,20 @@ class EmployeeList extends Component {
     reset = () => {
         this.setState({
             searchid: [],
-            managerid: ""
+            managerid: "",
+            sort_id: "",
         })
     }
 
     clearEmp = () => {
         this.props.dispatch(actions.clearEmp())
+    }
+
+    sort = (tar) => {
+        this.setState({
+            sort_id: tar,
+            order : this.state.order === "asc"? "desc": "asc",
+        })
     }
 
     render() {
@@ -66,17 +78,53 @@ class EmployeeList extends Component {
                         <TableHead>
                             <TableRow>
                                 <TableCell> Avatar </TableCell>
-                                <TableCell> Name </TableCell>
-                                <TableCell> Phone </TableCell>
-                                <TableCell> Email </TableCell>
+
+                                <TableCell key="name" sortDirection={true}> 
+                                    <TableSortLabel onClick = { () => this.sort("name") }
+                                        active = {this.state.sort_id === "name"}
+                                        direction = {this.state.order}
+                                    >
+                                    Name
+                                    </TableSortLabel>
+                                </TableCell>
+
+                                <TableCell key="phone" > 
+                                    <TableSortLabel onClick = { () => this.sort("phone") }
+                                        active = {this.state.sort_id === "phone"}
+                                        direction = {this.state.order}
+                                    >
+                                    Phone
+                                    </TableSortLabel>
+                                </TableCell>
+
+                                
+                                <TableCell key="email" > 
+                                    <TableSortLabel onClick = { () => this.sort("email") }
+                                        active = {this.state.sort_id === "email"}
+                                        direction = {this.state.order}
+                                    >
+                                    E-Mail
+                                    </TableSortLabel>
+                                </TableCell>
+
                                 <TableCell> Manager </TableCell>
                                 <TableCell> Numbers of Subordinates </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {
-                                this.state.searchid.length === 0 && this.state.managerid === "" &&                           
+                                this.state.searchid.length === 0 && this.state.managerid === "" && this.state.sort_id === "" &&
                                 this.props.employees.map((element, index) => (
+                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate} showManager={this.showManager}/>
+                                ))
+                            }
+
+                            {
+                                this.state.searchid.length === 0 && this.state.managerid === "" && this.state.sort_id !== "" &&
+                                this.props.employees.sort( (a,b) => (
+                                    this.state.order === "asc" ? (a[this.state.sort_id].localeCompare(b[this.state.sort_id])) : 
+                                                                 (b[this.state.sort_id].localeCompare(a[this.state.sort_id]))
+                                )).map((element, index) => (
                                     <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate} showManager={this.showManager}/>
                                 ))
                             }

@@ -36,21 +36,23 @@ export const getOne = (id) => {
 }
 
 export const saveEmp = (emp) => {
-    if(emp._id !== undefined){
+    let m_id = String(emp.manager_id)
+    emp.manager_id = {
+        $oid: m_id
+    }
+
+    if(emp._id !== undefined){        
         return(dispatch => {
-        axios.put("http://localhost:8888/employees/" + emp._id, emp)
-            .then(res => {
-                window.location = '/';
-            })
-            .catch(err => console.log(emp));
+            axios.put("http://localhost:8888/employees/" + emp._id, emp)
+                .then(window.location = '/')
+                .catch(err => console.log(err))
         })
     } else {
-        axios.post("http://localhost:8888/employees/", emp)
-            .then(res => {
-                window.location = '/';
-            })
-
-            .catch(err => console.log(emp));
+        return(dispatch => {
+            axios.post("http://localhost:8888/employees/", emp)
+                .then(window.location = '/')
+                .catch(err => console.log(err));
+        })
     }
     
 }
@@ -85,3 +87,4 @@ export const clearEmp = () => {
         type: "CLEAREMP",
     })
 }
+

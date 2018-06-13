@@ -7,7 +7,7 @@ const EmpSchema = new Schema({
     email : String,
     manager : {
         type: Schema.Types.ObjectId,
-        ref : 'manager'
+        ref : 'Employee'
     },
     subordinate: [],
 });
