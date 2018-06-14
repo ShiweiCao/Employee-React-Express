@@ -119,36 +119,31 @@ router.put('/:emp_id', (req,res) => {
             })
         })
     }
-    
-
-
 })
 
 router.delete('/:emp_id', (req,res) => {
-    var subordinate_id = [];
-    var manager_id = {};
 
     Employee.findById(req.params.emp_id, (err, emp) => {
         if(err) {
             res.status(500).send('Failed to find')
         }
-        subordinate_id = [...emp.subordinate];        
-        manager_id = emp.manager_id !== undefined ? {...emp.manager_id} : {};
+        let subordinate_id = [...emp.subordinate];       
+        let manager_id = emp.manager_id;
+        let objID = emp._id;
+        
 
         // Deal with Manager
-        console.log(manager_id);
         Employee.findById(manager_id, (err, manager) => {
             if(err) {
                 res.status(500).send('Failed to find')
             }
-
             var deleteID = -1;
             manager.subordinate.map((element, index) => {
-                if (element === objID){
+                if (element.toString() === objID.toString()){
                     deleteID = index;
                 }
             })
-            
+
             if(deleteID >=0){
                 manager.subordinate.splice(deleteID, 1);
             }

@@ -40,7 +40,7 @@ export const saveEmp = (emp) => {
         return(dispatch => {
             console.log("in Put")
             axios.put("http://localhost:8888/employees/" + emp._id, emp)
-                // .then(window.location = '/')
+                .then(window.location = '/')
                 .catch(err => console.log(err))
         })
     } else {
