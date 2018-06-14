@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
     emp.name = req.body.name;
     emp.phone = req.body.phone;
     emp.email = req.body.email;
-    emp.manager = req.body.manager_id;
+    emp.manager_id = req.body.manager_id;
     emp.subordinate = [];
 
     emp.save( err => {
@@ -49,7 +49,7 @@ router.put('/:emp_id', (req,res) => {
             emp.name = req.body.name;
             emp.phone = req.body.phone;
             emp.email = req.body.email;
-            emp.manager = req.body.manager_id;
+            emp.manager_id = req.body.manager_id;
             emp.subordinate = req.body.subordinate;
             emp.save(err => {
                 if(err) {

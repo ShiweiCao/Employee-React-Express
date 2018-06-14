@@ -36,10 +36,6 @@ export const getOne = (id) => {
 }
 
 export const saveEmp = (emp) => {
-    let m_id = String(emp.manager_id)
-    emp.manager_id = {
-        $oid: m_id
-    }
 
     if(emp._id !== undefined){        
         return(dispatch => {
