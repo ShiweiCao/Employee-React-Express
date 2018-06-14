@@ -50,7 +50,7 @@ const employeeR = (state = initialState, action) => {
         }
 
         case "CLEAREMP": 
-            return {...state, employee: {_id:"", name:"", phone:"", email:"", manager_id:"", subordinate:[], allSub:[]}}
+            return {...state, employee: { name:"", phone:"", email:"", manager_id:"", subordinate:[], allSub:[]}}
         default:
             return state;
     }

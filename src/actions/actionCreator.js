@@ -10,7 +10,7 @@ export const getAllEmps = () => {
 
                 let newEmps = [...emps];
                 emps.map((emp, index) => {
-                    if(emp.manager_id !== ""){
+                    if(emp.manager_id !== "" && emp.manager_id !== undefined){
                         axios.get("http://localhost:8888/employees/" + emp.manager_id)
                             .then(res => {
                                 newEmps[index] = { ...newEmps[index], managername : res.data.name };
@@ -36,15 +36,17 @@ export const getOne = (id) => {
 }
 
 export const saveEmp = (emp) => {
-
+    // console.log(typeof(emp._id));
     if(emp._id !== undefined){        
         return(dispatch => {
+            console.log("in Put")
             axios.put("http://localhost:8888/employees/" + emp._id, emp)
-                .then(window.location = '/')
+                // .then(window.location = '/')
                 .catch(err => console.log(err))
         })
     } else {
         return(dispatch => {
+            console.log("in Post")
             axios.post("http://localhost:8888/employees/", emp)
                 .then(window.location = '/')
                 .catch(err => console.log(err));

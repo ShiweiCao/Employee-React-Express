@@ -35,8 +35,21 @@ router.post('/', (req, res) => {
         if(err) {
             res.status(500).send("Cannot create:" + err);
         } 
-        res.status(201).json({"Employee created" : emp});
+        // res.status(201).json({"Employee created" : emp});
     });
+
+    Employee.findById(emp.manager_id, (err, manager) => {
+        if(err) {
+            res.status(500).send(err);
+        }
+        manager.subordinate.push(emp._id)
+        manager.save(err => {
+            if(err) {
+                res.status(500).send("Cannot update relationship")
+            }
+            res.status(201).json({"Employee created" : emp})
+        })
+    })
 });
 
 router.put('/:emp_id', (req,res) => {
