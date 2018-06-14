@@ -63,7 +63,7 @@ class EmployeeList extends Component {
 
     render() {
         return (
-            <div className="container" style={{width: "1500px"}}>
+            <div className="container" style={{width: "1300px", margin: "auto"}}>
                 <div style={{width: "50%", float: "left", textAlign: "center"}}>
                     <h1>Employee Table </h1>
                 </div>
@@ -74,7 +74,7 @@ class EmployeeList extends Component {
                 </div>
 
                 <div className="empTable">
-                    <Table>
+                    <Table style={{textAlign: "center"}}>
                         <TableHead>
                             <TableRow>
                                 <TableCell> Avatar </TableCell>
@@ -109,6 +109,7 @@ class EmployeeList extends Component {
 
                                 <TableCell> Manager </TableCell>
                                 <TableCell> Numbers of Subordinates </TableCell>
+                                <TableCell> Delete </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

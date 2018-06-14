@@ -73,7 +73,6 @@ router.put('/:emp_id', (req,res) => {
                 if(err) {
                     res.status(500).send('Failed to save:' + err);
                 }
-                // res.status(200).json({'Employee updated!' : emp})
             })
         }
     })
@@ -126,14 +125,69 @@ router.put('/:emp_id', (req,res) => {
 })
 
 router.delete('/:emp_id', (req,res) => {
-    Employee.remove({
-        _id : req.params.emp_id
-    }, (err, emp) => {
+    var subordinate_id = [];
+    var manager_id = {};
+
+    Employee.findById(req.params.emp_id, (err, emp) => {
         if(err) {
-            res.status(500).send(err);
+            res.status(500).send('Failed to find')
         }
-        res.status(200).json({'Employee deleted!': req.params.emp_id});
+        subordinate_id = [...emp.subordinate];        
+        manager_id = emp.manager_id !== undefined ? {...emp.manager_id} : {};
+
+        // Deal with Manager
+        console.log(manager_id);
+        Employee.findById(manager_id, (err, manager) => {
+            if(err) {
+                res.status(500).send('Failed to find')
+            }
+
+            var deleteID = -1;
+            manager.subordinate.map((element, index) => {
+                if (element === objID){
+                    deleteID = index;
+                }
+            })
+            
+            if(deleteID >=0){
+                manager.subordinate.splice(deleteID, 1);
+            }
+
+            manager.save(err => {
+                if(err) {
+                    res.status(500).send('Failed to update:' + err);
+                }
+                // res.status(200).send('Employee deleted!')
+            })        
+        })
+
+        //Deal with subordinate
+        subordinate_id.map((element, index) => {
+            Employee.findById(element, (err, sub) => {
+                delete sub.manager_id;
+
+                sub.save(err => {
+                    if(err) {
+                        res.status(500).send('Failed to update:' + err);
+                    }
+                    // res.status(200).send('Employee deleted!')
+                }) 
+            })
+        })
+        
+        Employee.remove({
+            _id : req.params.emp_id
+        }, (err, emp) => {
+            if(err) {
+                res.status(500).send(err);
+            }
+            res.status(200).json({'Employee deleted!': req.params.emp_id});
+        })
     })
+
+    
+
+    
 })
 
 module.exports = router;
