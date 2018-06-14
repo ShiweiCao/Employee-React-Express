@@ -61,6 +61,10 @@ class EmployeeList extends Component {
         })
     }
 
+    delete = (id) => {
+        this.props.dispatch(actions.deleteEmp(id));
+    }
+
     render() {
         return (
             <div className="container" style={{width: "1300px", margin: "auto"}}>
@@ -79,7 +83,7 @@ class EmployeeList extends Component {
                             <TableRow>
                                 <TableCell> Avatar </TableCell>
 
-                                <TableCell key="name" sortDirection={true}> 
+                                <TableCell key="name"> 
                                     <TableSortLabel onClick = { () => this.sort("name") }
                                         active = {this.state.sort_id === "name"}
                                         direction = {this.state.order}
@@ -116,7 +120,7 @@ class EmployeeList extends Component {
                             {
                                 this.state.searchid.length === 0 && this.state.managerid === "" && this.state.sort_id === "" &&
                                 this.props.employees.map((element, index) => (
-                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate} showManager={this.showManager}/>
+                                    <Tablerow emp={element} key={index} onDel={this.delete} showSubordinate={this.showSubordinate} showManager={this.showManager}/>
                                 ))
                             }
 
@@ -126,21 +130,21 @@ class EmployeeList extends Component {
                                     this.state.order === "asc" ? (a[this.state.sort_id].localeCompare(b[this.state.sort_id])) : 
                                                                  (b[this.state.sort_id].localeCompare(a[this.state.sort_id]))
                                 )).map((element, index) => (
-                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate} showManager={this.showManager}/>
+                                    <Tablerow emp={element} key={index} onDel={this.delete} showSubordinate={this.showSubordinate} showManager={this.showManager}/>
                                 ))
                             }
 
                             {
                                 this.state.searchid.length > 0 &&
                                 this.props.employees.filter( each => this.state.searchid.includes(each._id) ).map((element, index) => (
-                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate} showManager={this.showManager} />
+                                    <Tablerow emp={element} key={index} onDel={this.delete} showSubordinate={this.showSubordinate} showManager={this.showManager} />
                                 ))
                             }
 
                             {
                                 this.state.managerid !== "" && 
                                 this.props.employees.filter( each => this.state.managerid === each._id).map((element, index) => (
-                                    <Tablerow emp={element} key={index} showSubordinate={this.showSubordinate} showManager={this.showManager} />
+                                    <Tablerow emp={element} key={index} onDel={this.delete} showSubordinate={this.showSubordinate} showManager={this.showManager} />
                                 ))
                             }
                         </TableBody>

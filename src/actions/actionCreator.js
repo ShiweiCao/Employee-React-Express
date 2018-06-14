@@ -54,6 +54,14 @@ export const saveEmp = (emp) => {
     
 }
 
+export const deleteEmp = (id) => {
+    return(dispatch => {
+        axios.delete("http://localhost:8888/employees/" + id)
+            .then(window.location = '/')
+            .catch(err => console.log(err));
+    })
+}
+
 
 //----------------------------------------
 

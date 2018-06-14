@@ -9,7 +9,6 @@ const employeeR = (state = initialState, action) => {
             return {...state, employees: [...action.data]};
 
         case "GETONE":{
-            
             if(action.data.subordinate.length !== 0){
                 let stack = [...action.data.subordinate];
                 let res = [];
@@ -19,6 +18,7 @@ const employeeR = (state = initialState, action) => {
                     let cur_id = stack.pop();
                     res.push(cur_id);
                     let cur = state.employees.find(element => (element._id === cur_id));
+
                     if(cur.subordinate.length !== 0){
                         stack.push(...cur.subordinate); 
                     }
