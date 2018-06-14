@@ -36,7 +36,6 @@ export const getOne = (id) => {
 }
 
 export const saveEmp = (emp) => {
-    // console.log(typeof(emp._id));
     if(emp._id !== undefined){        
         return(dispatch => {
             console.log("in Put")
