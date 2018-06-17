@@ -5,8 +5,9 @@ import TableRow from '@material-ui/core/TableRow';
 
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import { Link } from 'react-router-dom';
+
+import empAvatar from '../../img/avatar.png'
 
 export default class Tablerow extends Component {
     constructor(props) {
@@ -20,12 +21,12 @@ export default class Tablerow extends Component {
 
         return (
             <TableRow hover>
-                <TableCell> {this.props.emp.avatar} </TableCell>
+                <TableCell> <img src={empAvatar} alt="avatar" width="50px" /> </TableCell>
                 <TableCell> <Link to={url}> {this.props.emp.name} </Link> </TableCell>
                 <TableCell> <a href={telstr}>{this.props.emp.phone}</a> </TableCell>
                 <TableCell> <a href={emailstr}>{this.props.emp.email}</a> </TableCell>
                 {
-                    this.props.emp.manager_id !== undefined && <TableCell onClick={ () => this.props.showManager(this.props.emp.manager_id) }> {this.props.emp.managername} </TableCell>
+                    this.props.emp.manager_id !== undefined && <TableCell style={{textDecoration: "underline", color:"blue"}} onClick={ () => this.props.showManager(this.props.emp.manager_id) }> {this.props.emp.managername} </TableCell>
                 }
 
                 {
